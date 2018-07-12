@@ -235,7 +235,7 @@ curl 'https://diwa.online/api/wallets/createClient'
   -H 'Authorization: Bearer YOUR-API-TOKEN'
   -H 'Content-type: application/json'
   -H 'Accept: application/json'
-  --data '{"userId": 1, "authorized": false, "notifyType": "M", "notifyPeriod": "MONTH", "data": {
+  --data '{"userId": 1, "authorized": true, "notifyType": "M", "notifyPeriod": "MONTH", "data": {
     "email": "test@test.com",
     "phone": "123123123",
     "first_name": "test",
@@ -268,7 +268,7 @@ $headers = [
 
 $data = [
     'userId' => 1,
-    'authorized' => false,
+    'authorized' => true,
     'notifyType' => 'M',
     'notifyPeriod' => 'MONTH',
     'data' => [
@@ -318,7 +318,7 @@ headers = {
 
 data = {
   "userId": 1, 
-  "authorized": false, 
+  "authorized": true, 
   "notifyType": "M", 
   "notifyPeriod": "MONTH",
   "data": {
