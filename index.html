@@ -432,7 +432,7 @@
 <p>Создание записи в таблице клиентов процессинга кошельков DiWa. Вызывается по одному разу 
 для каждого пользователя. В случае повторного вызова возвращает ID ранее созданного клиента.</p>
 <h3 id='zapros'>Запрос</h3>
-<p><code>GET https://diwa.online/api/wallets/createClient</code></p>
+<p><code>POST https://diwa.online/api/wallets/createClient</code></p>
 <h3 id='paramyetry-zaprosa'>Параметры запроса</h3>
 <table><thead>
 <tr>
@@ -471,8 +471,252 @@
 <td>-</td>
 <td>Период уведомления, например <code>MONTH</code></td>
 </tr>
+<tr>
+<td>data</td>
+<td>object</td>
+<td>нет</td>
+<td>-</td>
+<td>Данные авторизованного клиента</td>
+</tr>
 </tbody></table>
 <h3 id='otvyet'>Ответ</h3>
+<p>В ответ вы получите ID клиента.</p>
+
+<aside class="success">
+ID клиента в ответе - внутренний ID клиента в системе DiWa.
+</aside>
+
+<aside class="warning">
+В случае редиректа в ответ, следует проверить корректность заголовков запроса.
+</aside>
+<h3 id='otvyet-2'>Ответ</h3>
+<p>В ответ вы получите ID клиента.</p>
+<h3 id='paramyetry-zaprosa-na-sozdaniye-avtorizovannogo-kliyenta'>Параметры запроса на создание авторизованного клиента</h3><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://diwa.online/api/wallets/createClient'</span>
+  -H <span class="s1">'Authorization: Bearer YOUR-API-TOKEN'</span>
+  -H <span class="s1">'Content-type: application/json'</span>
+  -H <span class="s1">'Accept: application/json'</span>
+  --data <span class="s1">'{"userId": 1, "authorized": false, "notifyType": "M", "notifyPeriod": "MONTH", "data": {
+    "email": "test@test.com",
+    "phone": "123123123",
+    "first_name": "test",
+    "last_name": "test",
+    "third_name": "test",
+    "passport_series": "1111",
+    "passport_number": "222333",
+    "birth_date": "1999-01-01",
+    "passport_issued_date": "1999-01-01",
+    "passport_issued_by": "test",
+    "registration_address": "test",
+    "additional_document_type": "INN",
+    "additional_document_number": "123456789",
+    "identification_type": 2,
+    "non_resident": false
+  }}'</span>
+</code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
+
+<span class="nv">$url</span> <span class="o">=</span> <span class="s1">'https://diwa.online/api/wallets/createClient'</span><span class="p">;</span>
+
+<span class="nv">$headers</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">'Authorization: Bearer YOUR-API-TOKEN'</span><span class="p">,</span>
+    <span class="s1">'Content-Type: application/json; charset=utf-8'</span><span class="p">,</span>
+    <span class="s1">'Accept: application/json'</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">'userId'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">'authorized'</span> <span class="o">=&gt;</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="s1">'notifyType'</span> <span class="o">=&gt;</span> <span class="s1">'M'</span><span class="p">,</span>
+    <span class="s1">'notifyPeriod'</span> <span class="o">=&gt;</span> <span class="s1">'MONTH'</span><span class="p">,</span>
+    <span class="s1">'data'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+      <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'test@test.com'</span><span class="p">,</span>
+      <span class="s1">'phone'</span> <span class="o">=&gt;</span> <span class="s1">'123123123'</span><span class="p">,</span>
+      <span class="s1">'first_name'</span> <span class="o">=&gt;</span> <span class="s1">'test'</span><span class="p">,</span>
+      <span class="s1">'last_name'</span> <span class="o">=&gt;</span> <span class="s1">'test'</span><span class="p">,</span>
+      <span class="s1">'third_name'</span> <span class="o">=&gt;</span> <span class="s1">'test'</span><span class="p">,</span>
+      <span class="s1">'passport_series'</span> <span class="o">=&gt;</span> <span class="s1">'1111'</span><span class="p">,</span>
+      <span class="s1">'passport_number'</span> <span class="o">=&gt;</span> <span class="s1">'222333'</span><span class="p">,</span>
+      <span class="s1">'birth_date'</span> <span class="o">=&gt;</span> <span class="s1">'1999-01-01'</span><span class="p">,</span>
+      <span class="s1">'passport_issued_date'</span> <span class="o">=&gt;</span> <span class="s1">'1999-01-01'</span><span class="p">,</span>
+      <span class="s1">'passport_issued_by'</span> <span class="o">=&gt;</span> <span class="s1">'test'</span><span class="p">,</span>
+      <span class="s1">'registration_address'</span> <span class="o">=&gt;</span> <span class="s1">'test'</span><span class="p">,</span>
+      <span class="s1">'additional_document_type'</span> <span class="o">=&gt;</span> <span class="s1">'INN'</span><span class="p">,</span>
+      <span class="s1">'additional_document_number'</span> <span class="o">=&gt;</span> <span class="s1">'123456789'</span><span class="p">,</span>
+      <span class="s1">'identification_type'</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s1">'non_resident'</span> <span class="o">=&gt;</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">];</span>
+
+<span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">(</span><span class="nv">$url</span><span class="p">);</span>
+
+<span class="nb">curl_setopt_array</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="p">[</span>
+  <span class="nx">CURLOPT_HTTPHEADER</span> <span class="o">=&gt;</span> <span class="nv">$headers</span><span class="p">,</span>
+  <span class="nx">CURLOPT_RETURNTRANSFER</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="nx">CURLOPT_POST</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="nx">CURLOPT_POSTFIELDS</span> <span class="o">=&gt;</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$data</span><span class="p">),</span>
+<span class="p">]);</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+
+<span class="nv">$response</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://diwa.online/api/wallets/createClient"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">"Authorization"</span><span class="p">:</span> <span class="s">"Bearer YOUR-API-TOKEN"</span><span class="p">,</span>
+  <span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json; charset=utf-8"</span><span class="p">,</span>
+  <span class="s">"Accept"</span><span class="p">:</span> <span class="s">"application/json; charset=utf-8"</span>
+<span class="p">}</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">"userId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> 
+  <span class="s">"authorized"</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span> 
+  <span class="s">"notifyType"</span><span class="p">:</span> <span class="s">"M"</span><span class="p">,</span> 
+  <span class="s">"notifyPeriod"</span><span class="p">:</span> <span class="s">"MONTH"</span><span class="p">,</span>
+  <span class="s">"data"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">"email"</span><span class="p">:</span> <span class="s">"test@test.com"</span><span class="p">,</span>
+    <span class="s">"phone"</span><span class="p">:</span> <span class="s">"123123123"</span><span class="p">,</span>
+    <span class="s">"first_name"</span><span class="p">:</span> <span class="s">"test"</span><span class="p">,</span>
+    <span class="s">"last_name"</span><span class="p">:</span> <span class="s">"test"</span><span class="p">,</span>
+    <span class="s">"third_name"</span><span class="p">:</span> <span class="s">"test"</span><span class="p">,</span>
+    <span class="s">"passport_series"</span><span class="p">:</span> <span class="s">"1111"</span><span class="p">,</span>
+    <span class="s">"passport_number"</span><span class="p">:</span> <span class="s">"222333"</span><span class="p">,</span>
+    <span class="s">"birth_date"</span><span class="p">:</span> <span class="s">"1999-01-01"</span><span class="p">,</span>
+    <span class="s">"passport_issued_date"</span><span class="p">:</span> <span class="s">"1999-01-01"</span><span class="p">,</span>
+    <span class="s">"passport_issued_by"</span><span class="p">:</span> <span class="s">"test"</span><span class="p">,</span>
+    <span class="s">"registration_address"</span><span class="p">:</span> <span class="s">"test"</span><span class="p">,</span>
+    <span class="s">"additional_document_type"</span><span class="p">:</span> <span class="s">"INN"</span><span class="p">,</span>
+    <span class="s">"additional_document_number"</span><span class="p">:</span> <span class="s">"123456789"</span><span class="p">,</span>
+    <span class="s">"identification_type"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s">"non_resident"</span><span class="p">:</span> <span class="n">false</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre>
+<blockquote>
+<p>Возвращает:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="mi">123</span><span class="w">
+</span></code></pre>
+<table><thead>
+<tr>
+<th>Параметр</th>
+<th>Тип</th>
+<th>Обязательный</th>
+<th>По умолчанию</th>
+<th>Описание</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>email</td>
+<td>string</td>
+<td>да</td>
+<td>-</td>
+<td>Действующий адрес электронной почты</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>string</td>
+<td>да</td>
+<td>-</td>
+<td>Действующий мобильный телефон</td>
+</tr>
+<tr>
+<td>first_name</td>
+<td>string</td>
+<td>да</td>
+<td>-</td>
+<td>Имя</td>
+</tr>
+<tr>
+<td>last_name</td>
+<td>string</td>
+<td>да</td>
+<td>-</td>
+<td>Фамилия</td>
+</tr>
+<tr>
+<td>third_name</td>
+<td>string</td>
+<td>да</td>
+<td>-</td>
+<td>Отчество</td>
+</tr>
+<tr>
+<td>passport_series</td>
+<td>string</td>
+<td>да</td>
+<td>-</td>
+<td>Серия паспорта</td>
+</tr>
+<tr>
+<td>passport_number</td>
+<td>string</td>
+<td>да</td>
+<td>-</td>
+<td>Номер паспорта</td>
+</tr>
+<tr>
+<td>birth_date</td>
+<td>string</td>
+<td>да</td>
+<td>-</td>
+<td>Дата рождения в формате YYYY-MM-DD</td>
+</tr>
+<tr>
+<td>passport_issued_date</td>
+<td>string</td>
+<td>да</td>
+<td>-</td>
+<td>Дата выдачи паспорта в формате YYYY-MM-DD</td>
+</tr>
+<tr>
+<td>passport_issued_by</td>
+<td>string</td>
+<td>да</td>
+<td>-</td>
+<td>Орган выдачи паспорта</td>
+</tr>
+<tr>
+<td>registration_address</td>
+<td>string</td>
+<td>да</td>
+<td>-</td>
+<td>Адрес регистрации</td>
+</tr>
+<tr>
+<td>additional_document_type</td>
+<td>string</td>
+<td>да</td>
+<td>-</td>
+<td>Тип дополнительно документа: INN, SNILS, OMS</td>
+</tr>
+<tr>
+<td>additional_document_number</td>
+<td>string</td>
+<td>да</td>
+<td>-</td>
+<td>Номер дополнительно документа</td>
+</tr>
+<tr>
+<td>identification_type</td>
+<td>string</td>
+<td>да</td>
+<td>-</td>
+<td>Тип идентификации: 1 – без идентификации, 2 - упрощенная идентификация, 3 – полная идентификация</td>
+</tr>
+<tr>
+<td>non_resident</td>
+<td>boolean</td>
+<td>нет</td>
+<td>-</td>
+<td>Нерезидент (необязательное поле)</td>
+</tr>
+</tbody></table>
+<h3 id='otvyet-3'>Ответ</h3>
 <p>В ответ вы получите ID клиента.</p>
 
 <aside class="success">
