@@ -495,7 +495,7 @@ ID клиента в ответе - внутренний ID клиента в с
   -H <span class="s1">'Authorization: Bearer YOUR-API-TOKEN'</span>
   -H <span class="s1">'Content-type: application/json'</span>
   -H <span class="s1">'Accept: application/json'</span>
-  --data <span class="s1">'{"userId": 1, "authorized": false, "notifyType": "M", "notifyPeriod": "MONTH", "data": {
+  --data <span class="s1">'{"userId": 1, "authorized": true, "notifyType": "M", "notifyPeriod": "MONTH", "data": {
     "email": "test@test.com",
     "phone": "123123123",
     "first_name": "test",
@@ -524,7 +524,7 @@ ID клиента в ответе - внутренний ID клиента в с
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">'userId'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="s1">'authorized'</span> <span class="o">=&gt;</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="s1">'authorized'</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
     <span class="s1">'notifyType'</span> <span class="o">=&gt;</span> <span class="s1">'M'</span><span class="p">,</span>
     <span class="s1">'notifyPeriod'</span> <span class="o">=&gt;</span> <span class="s1">'MONTH'</span><span class="p">,</span>
     <span class="s1">'data'</span> <span class="o">=&gt;</span> <span class="p">[</span>
@@ -570,7 +570,7 @@ ID клиента в ответе - внутренний ID клиента в с
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">"userId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> 
-  <span class="s">"authorized"</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span> 
+  <span class="s">"authorized"</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span> 
   <span class="s">"notifyType"</span><span class="p">:</span> <span class="s">"M"</span><span class="p">,</span> 
   <span class="s">"notifyPeriod"</span><span class="p">:</span> <span class="s">"MONTH"</span><span class="p">,</span>
   <span class="s">"data"</span><span class="p">:</span> <span class="p">{</span>
