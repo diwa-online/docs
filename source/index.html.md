@@ -2,9 +2,9 @@
 title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - php
-  - python
+  - shell: cURL
+  - php: PHP
+  - python: Python
 
 toc_footers:
   - <a href='https://diwa.online/'>Зарегистрироваться и получить ключ</a>
@@ -169,7 +169,7 @@ url = "https://diwa.online/api/wallets/createClient"
 headers = {
   "Authorization": "Bearer YOUR-API-TOKEN",
   "Content-Type": "application/json; charset=utf-8",
-  "Accept": "application/json; charset=utf-8"
+  "Accept": "application/json"
 }
 
 data = {
@@ -313,7 +313,7 @@ url = "https://diwa.online/api/wallets/createClient"
 headers = {
   "Authorization": "Bearer YOUR-API-TOKEN",
   "Content-Type": "application/json; charset=utf-8",
-  "Accept": "application/json; charset=utf-8"
+  "Accept": "application/json"
 }
 
 data = {
@@ -355,22 +355,24 @@ response = result.json()
 
 Параметр       | Тип     | Обязательный | По умолчанию | Описание
 -------------- | ------- | -----------  | ------------ | ---------------------------------------- 
-email | string | да | - | Действующий адрес электронной почты
-phone | string | да | - | Действующий мобильный телефон
-first_name | string | да | - | Имя
-last_name | string | да | - | Фамилия
-third_name | string | да | - | Отчество
-passport_series | string | да | - | Серия паспорта
-passport_number | string | да | - | Номер паспорта
-birth_date | string | да | - | Дата рождения в формате YYYY-MM-DD
-passport_issued_date | string | да | - | Дата выдачи паспорта в формате YYYY-MM-DD
-passport_issued_by | string | да | - | Орган выдачи паспорта
-registration_address | string | да | - | Адрес регистрации
-additional_document_type | string | да | - | Тип дополнительно документа: INN, SNILS, OMS
-additional_document_number | string | да | - | Номер дополнительно документа
-identification_type | string | да | - | Тип идентификации: 1 – без идентификации, 2 - упрощенная идентификация, 3 – полная идентификация
+email | string | нет | - | Действующий адрес электронной почты
+phone | string | нет | - | Действующий мобильный телефон
+first_name | string | нет | - | Имя
+last_name | string | нет | - | Фамилия
+third_name | string | нет | - | Отчество
+passport_series | string | нет | - | Серия паспорта
+passport_number | string | нет | - | Номер паспорта
+birth_date | string | нет | - | Дата рождения в формате YYYY-MM-DD
+passport_issued_date | string | нет | - | Дата выдачи паспорта в формате YYYY-MM-DD
+passport_issued_by | string | нет | - | Орган выдачи паспорта
+registration_address | string | нет | - | Адрес регистрации
+additional_document_type | string | нет | - | Тип дополнительно документа: INN, SNILS, OMS
+additional_document_number | string | нет | - | Номер дополнительно документа
+identification_type | string | нет | - | Тип идентификации: 1 – без идентификации, 2 - упрощенная идентификация, 3 – полная идентификация
 non_resident | boolean | нет | - | Нерезидент (необязательное поле)
 
+
+Параметры `data` необязательны, но если какого-либо параметра не будет, то пользователь будет создан неидентифицированным.
 
 
 
@@ -453,7 +455,7 @@ import requests
 
 userId = 1
 
-url = "https://diwa.online/api/wallets/createClient/{}".format(userId)
+url = "https://diwa.online/api/wallets/getClientId/{}".format(userId)
 
 headers = {
   "Authorization": "Bearer YOUR-API-TOKEN",
@@ -477,6 +479,104 @@ response = result.json()
 ### Запрос
 
 `GET https://diwa.online/api/wallets/getClientId/<userId>`
+
+### Параметры URL
+
+Параметр  | Описание
+--------- | -----------
+userId    | ссылка на пользователя в системе Компании Витрины
+
+
+
+## Получить информацию о пользователе
+
+
+```shell
+curl 'https://diwa.online/api/wallets/getClientInfo/1'
+  -H 'Authorization: Bearer YOUR-API-TOKEN'
+  -H 'Accept: application/json'
+```
+
+
+```php
+<?php
+
+$userId = 1;
+
+$url = 'https://diwa.online/api/wallets/getClientInfo/' . $userId;
+
+$headers = [
+    'Authorization: Bearer YOUR-API-TOKEN',
+    'Accept: application/json',
+];
+
+$ch = curl_init($url);
+
+curl_setopt_array($ch, [
+  CURLOPT_HTTPHEADER => $headers,
+  CURLOPT_RETURNTRANSFER => true,
+]);
+
+$result = curl_exec($ch);
+
+$response = json_decode($result);
+```
+
+
+```python
+import requests
+
+userId = 1
+
+url = "https://diwa.online/api/wallets/getClientInfo/{}".format(userId)
+
+headers = {
+  "Authorization": "Bearer YOUR-API-TOKEN",
+  "Accept": "application/json; charset=utf-8"
+}
+
+result = requests.get(url, headers=headers)
+
+response = result.json()
+```
+
+
+> Возвращает:
+
+```json
+{
+    "id": 1,
+    "user_id": 123,
+    "creation_date": "2018-01-02 03:04:05",
+    "last_notify_date": null,
+    "notify_type": "M",
+    "notify_period": "MONTH",
+    "authorized": true,
+    "data": {
+        "email": "test@test.com",
+        "phone": "123123",
+        "first_name": "test",
+        "last_name": "test",
+        "third_name": "test",
+        "passport_series": "test",
+        "passport_number": "test",
+        "birth_date": "1999-01-01",
+        "passport_issued_date": "1999-01-01",
+        "passport_issued_by": "test",
+        "registration_address": "test",
+        "additional_document_type": "INN",
+        "additional_document_number": "test",
+        "identification_type": "2",
+        "non_resident": false
+    }
+}
+```
+
+Возвращает информацию о пользователе.
+
+### Запрос
+
+`GET https://diwa.online/api/wallets/getClientInfo/<userId>`
 
 ### Параметры URL
 
